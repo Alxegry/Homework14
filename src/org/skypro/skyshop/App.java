@@ -5,6 +5,9 @@ import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.article.Article;
+import org.skypro.skyshop.search.SearchEngine;
+import java.util.Arrays;
 
 public class App {
     public static void main(String[] args) {
@@ -29,5 +32,21 @@ public class App {
         basket.printBasket();
         System.out.println(basket.calculateCost());
         System.out.println(basket.searchByName("name1"));
+        SearchEngine archive = new SearchEngine(10);
+        archive.add(pr1);
+        archive.add(pr2);
+        archive.add(pr3);
+        archive.add(pr4);
+        archive.add(pr5);
+        archive.add(pr6);
+        Article pr7 = new Article("article1", "name1");
+        Article pr8 = new Article("article2", "name2");
+        Article pr9 = new Article("article3", "name3");
+        archive.add(pr7);
+        archive.add(pr8);
+        archive.add(pr9);
+        System.out.println(Arrays.toString(archive.search("name")));
+        System.out.println(Arrays.toString(archive.search("article")));
+        System.out.println(Arrays.toString(archive.search("name3")));
     }
 }
