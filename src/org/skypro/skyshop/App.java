@@ -6,6 +6,7 @@ import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.article.Article;
+import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
 import java.util.Arrays;
 
@@ -48,5 +49,30 @@ public class App {
         System.out.println(Arrays.toString(archive.search("name")));
         System.out.println(Arrays.toString(archive.search("article")));
         System.out.println(Arrays.toString(archive.search("name3")));
+        try {
+            Product pr10 = new SimpleProduct("name10", 0);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product pr11 = new DiscountedProduct("name11", 100, 120);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product pr12 = new FixPriceProduct("");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            System.out.println(archive.findBestMatch("e"));
+        } catch (BestResultNotFound e) {
+            System.out.println(e);
+        }
+        try {
+            System.out.println(archive.findBestMatch("b"));
+        } catch (BestResultNotFound e) {
+            System.out.println(e);
+        }
     }
 }
