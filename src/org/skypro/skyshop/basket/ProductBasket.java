@@ -2,29 +2,26 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class ProductBasket {
-    private final Product[] basket = new Product[5];
-    private static int special = 0;
+    private final List<Product> basket = new LinkedList<>();
 
     public void addProduct(Product product) {
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] == null) {
-                basket[i] = product;
-                return;
-            }
-        }
-        System.out.println("Невозможно добавить продукт");
+        basket.add(product);
     }
 
     public int countSpecial() {
+        int i = 0;
         for (Product product : basket) {
             if (product != null && product.isSpecial()) {
-                special++;
+                i++;
             }
         }
-        return special;
+        return i;
     }
 
     public int calculateCost() {
@@ -66,9 +63,19 @@ public class ProductBasket {
     }
 
     public void emptyBasket() {
-        for (int i = 0; i < basket.length; i++) {
-            basket[i] = null;
+        basket.clear();
+    }
+
+    public List<Product> removeProduct(String name) {
+        List<Product> result = new LinkedList<>();
+        Iterator<Product> it = basket.iterator();
+        while (it.hasNext()) {
+            Product element = it.next();
+            if (element.getName().equals(name)) {
+                result.add(element);
+                it.remove();
+            }
         }
-        special = 0;
+        return result;
     }
 }
