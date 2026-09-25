@@ -8,7 +8,8 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
-import java.util.Arrays;
+
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -24,7 +25,12 @@ public class App {
         basket.addProduct(pr3);
         basket.addProduct(pr4);
         basket.addProduct(pr5);
-        basket.addProduct(pr6);
+        System.out.println(basket.removeProduct("name1"));
+        basket.printBasket();
+        List<Product> removed = basket.removeProduct("name6");
+        if (removed.isEmpty()) {
+            System.out.println("Список пуст");
+        }
         basket.printBasket();
         System.out.println(basket.calculateCost());
         System.out.println(basket.searchByName("name1"));
@@ -33,7 +39,7 @@ public class App {
         basket.printBasket();
         System.out.println(basket.calculateCost());
         System.out.println(basket.searchByName("name1"));
-        SearchEngine archive = new SearchEngine(10);
+        SearchEngine archive = new SearchEngine();
         archive.add(pr1);
         archive.add(pr2);
         archive.add(pr3);
@@ -46,9 +52,9 @@ public class App {
         archive.add(pr7);
         archive.add(pr8);
         archive.add(pr9);
-        System.out.println(Arrays.toString(archive.search("name")));
-        System.out.println(Arrays.toString(archive.search("article")));
-        System.out.println(Arrays.toString(archive.search("name3")));
+        System.out.println(archive.search("name"));
+        System.out.println(archive.search("article"));
+        System.out.println(archive.search("name3"));
         try {
             Product pr10 = new SimpleProduct("name10", 0);
         } catch (IllegalArgumentException e) {
