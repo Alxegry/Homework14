@@ -2,23 +2,22 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ProductBasket {
-    private final List<Product> basket = new LinkedList<>();
+    private final Map<String, List<Product>> basket = new HashMap<>();
 
     public void addProduct(Product product) {
-        basket.add(product);
+        basket.computeIfAbsent(product.getName(), k -> new ArrayList<>()).add(product);
     }
 
     public int countSpecial() {
         int i = 0;
-        for (Product product : basket) {
-            if (product != null && product.isSpecial()) {
-                i++;
+        for (List<Product> productList : basket.values()) {
+            for (Product product : productList) {
+                if (product != null && product.isSpecial()) {
+                    i++;
+                }
             }
         }
         return i;
@@ -26,9 +25,11 @@ public class ProductBasket {
 
     public int calculateCost() {
         int result = 0;
-        for (Product product : basket) {
-            if (product != null) {
-                result += product.getPrice();
+        for (List<Product> productList : basket.values()) {
+            for (Product product : productList) {
+                if (product != null) {
+                    result += product.getPrice();
+                }
             }
         }
         return result;
@@ -36,10 +37,12 @@ public class ProductBasket {
 
     public void printBasket() {
         boolean empty = true;
-        for (Product product : basket) {
-            if (product != null) {
-                System.out.println(product);
-                empty = false;
+        for (List<Product> productList : basket.values()) {
+            for (Product product : productList) {
+                if (product != null) {
+                    System.out.println(product);
+                    empty = false;
+                }
             }
         }
         if (empty) {
@@ -51,15 +54,7 @@ public class ProductBasket {
     }
 
     public boolean searchByName(String name) {
-        for (Product product : basket) {
-            if (name == null) {
-                return false;
-            }
-            if (product != null && Objects.equals(product.getName(), name)) {
-                return true;
-            }
-        }
-        return false;
+        return basket.containsKey(name);
     }
 
     public void emptyBasket() {
@@ -67,14 +62,9 @@ public class ProductBasket {
     }
 
     public List<Product> removeProduct(String name) {
-        List<Product> result = new LinkedList<>();
-        Iterator<Product> it = basket.iterator();
-        while (it.hasNext()) {
-            Product element = it.next();
-            if (element.getName().equals(name)) {
-                result.add(element);
-                it.remove();
-            }
+        List<Product> result = basket.remove(name);
+        if (result == null) {
+            return new ArrayList<>();
         }
         return result;
     }
