@@ -13,7 +13,7 @@ public class SearchEngine {
         Map<String, Searchable> result = new TreeMap<>();
         for (Searchable product : archive) {
             if (product != null && product.getSearchTerm().contains(text)) {
-                result.put(product.getSearchTerm(), product);
+                result.put(product.getName(), product);
             }
         }
         return result;
