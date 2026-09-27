@@ -8,8 +8,9 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.search.BestResultNotFound;
 import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
-import java.util.List;
+import java.util.*;
 
 public class App {
     public static void main(String[] args) {
@@ -52,9 +53,30 @@ public class App {
         archive.add(pr7);
         archive.add(pr8);
         archive.add(pr9);
-        System.out.println(archive.search("name"));
-        System.out.println(archive.search("article"));
-        System.out.println(archive.search("name3"));
+        Map<String, Searchable> result1 = archive.search("name");
+        if (result1.isEmpty()) {
+            System.out.println("No result");
+        } else {
+            for (Searchable test : result1.values()) {
+                System.out.println(test);
+            }
+        }
+        Map<String, Searchable> result2 = archive.search("article");
+        if (result2.isEmpty()) {
+            System.out.println("No result");
+        } else {
+            for (Searchable test : result2.values()) {
+                System.out.println(test);
+            }
+        }
+        Map<String, Searchable> result3 = archive.search("name3");
+        if (result3.isEmpty()) {
+            System.out.println("No result");
+        } else {
+            for (Searchable test : result3.values()) {
+                System.out.println(test);
+            }
+        }
         try {
             Product pr10 = new SimpleProduct("name10", 0);
         } catch (IllegalArgumentException e) {
