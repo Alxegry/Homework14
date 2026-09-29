@@ -53,27 +53,27 @@ public class App {
         archive.add(pr7);
         archive.add(pr8);
         archive.add(pr9);
-        Map<String, Searchable> result1 = archive.search("name");
+        Set<Searchable> result1 = archive.search("name");
         if (result1.isEmpty()) {
             System.out.println("No result");
         } else {
-            for (Searchable test : result1.values()) {
+            for (Searchable test : result1) {
                 System.out.println(test);
             }
         }
-        Map<String, Searchable> result2 = archive.search("article");
+        Set<Searchable> result2 = archive.search("article");
         if (result2.isEmpty()) {
             System.out.println("No result");
         } else {
-            for (Searchable test : result2.values()) {
+            for (Searchable test : result2) {
                 System.out.println(test);
             }
         }
-        Map<String, Searchable> result3 = archive.search("name3");
+        Set<Searchable> result3 = archive.search("name3");
         if (result3.isEmpty()) {
             System.out.println("No result");
         } else {
-            for (Searchable test : result3.values()) {
+            for (Searchable test : result3) {
                 System.out.println(test);
             }
         }
