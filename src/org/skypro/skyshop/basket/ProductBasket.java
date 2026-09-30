@@ -11,45 +11,26 @@ public class ProductBasket {
         basket.computeIfAbsent(product.getName(), k -> new ArrayList<>()).add(product);
     }
 
-    public int countSpecial() {
-        int i = 0;
-        for (List<Product> productList : basket.values()) {
-            for (Product product : productList) {
-                if (product != null && product.isSpecial()) {
-                    i++;
-                }
-            }
-        }
-        return i;
+    private long getSpecialCount() {
+        return basket.values().stream().flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public int calculateCost() {
-        int result = 0;
-        for (List<Product> productList : basket.values()) {
-            for (Product product : productList) {
-                if (product != null) {
-                    result += product.getPrice();
-                }
-            }
-        }
-        return result;
+        return basket.values().stream().flatMap(Collection::stream)
+                .mapToInt(Product::getPrice)
+                .sum();
     }
 
     public void printBasket() {
-        boolean empty = true;
-        for (List<Product> productList : basket.values()) {
-            for (Product product : productList) {
-                if (product != null) {
-                    System.out.println(product);
-                    empty = false;
-                }
-            }
-        }
-        if (empty) {
+        basket.values().stream().flatMap(Collection::stream)
+                .forEach(System.out::println);
+        if (basket.isEmpty()) {
             System.out.println("B корзине пусто");
         } else {
             System.out.println("Итого: " + calculateCost());
-            System.out.println("Специальных товаров: " + countSpecial());
+            System.out.println("Специальных товаров: " + getSpecialCount());
         }
     }
 

@@ -1,22 +1,20 @@
 package org.skypro.skyshop.search;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
     private final Set<Searchable> archive;
+    private final Comparator<Searchable> searchableComparator = new SearchableComparator();
 
     public SearchEngine() {
         this.archive = new HashSet<>();
     }
 
     public Set<Searchable> search(String text) {
-        Set<Searchable> result = new TreeSet<>(new SearchableComparator());
-        for (Searchable product : archive) {
-            if (product != null && product.getSearchTerm().contains(text)) {
-                result.add(product);
-            }
-        }
-        return result;
+        return archive.stream()
+                .filter(i -> i.getSearchTerm().contains(text))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(searchableComparator)));
     }
 
     public Searchable findBestMatch(String search) throws BestResultNotFound {
